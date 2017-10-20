@@ -5,8 +5,12 @@ let util = {
         v = c === 'x' ? r : (r & 0x3) | 0x8;
       return v.toString(16);
     });
+  },
+
+  capitalizeFirstLetter : function(str) { //capitalizeFirstLetter
+        return str.charAt(0).toUpperCase() + str.slice(1);
   }
-  
+
 };
 
 export default util;

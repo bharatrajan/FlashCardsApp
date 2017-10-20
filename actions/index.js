@@ -40,10 +40,10 @@ export function getCardList () {
 export const addDeck = (deck) => dispatch => {
   AsyncStorage.getItem('deckList').then(deckListAsString =>{
     let deckList = JSON.parse(deckListAsString);
+        //deckList = [];
         deckList.push(deck);
         deckList = JSON.stringify(deckList);
     AsyncStorage.setItem('deckList', deckList).then(() =>{
-      debugger
       return dispatch(recieveDeckList(JSON.parse(deckList)))
     })
   });

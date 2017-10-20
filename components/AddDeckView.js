@@ -1,29 +1,49 @@
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Text, StyleSheet, Platform, AsyncStorage, TextInput } from 'react-native'
 import { connect } from 'react-redux'
-import { addDeck } from '../actions';
+import { addDeck, getDeckList } from '../actions';
 import util from '../utils'
+import _ from 'lodash';
 import { NavigationActions } from 'react-navigation'
+import { purple, white, green, pink, red } from '../utils/colors'
 
 class AddDeckView extends React.Component {
 
   state = {
-    isValid : true
+    isValid : true,
+    isDuplicateTitle : false,
+  }
+
+  componentDidMount = () => {
+    this.props.getAllDecksList()
   }
 
   onPress = () => {
-    const {text, isValid} = this.state;
+    const {text, isValid, isDuplicateTitle} = this.state;
+    const {decks} = this.props;
+    console.log("decks : ", decks)
     if(!text){
       this.setState({
-        isValid : false
+        isValid : false,
+        isDuplicateTitle : false,
+      })
+      return;
+    }else if(!_.isEmpty(decks[text.toLowerCase()])){
+      this.setState({
+        isValid : true,
+        isDuplicateTitle : true
       })
       return;
     }else{
       this.props.addDeck({
-        title: text,
         id : util.uuid(),
         timeStamp: new Date().getTime(),
-      })
+        title: util.capitalizeFirstLetter(text),
+      });
+      this.setState({
+        isValid : true,
+        isDuplicateTitle : false,
+      });
       //this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeckView'}))
     }
   }
@@ -31,17 +51,22 @@ class AddDeckView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text> TITLE </Text>
-        <TextInput
-          style={styles.inputBox}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
-        />
+        <Text style={styles.title}> ADD A TITLE </Text>
+        <View style={styles.inputBoxWrapper}>
+          <TextInput
+            style={styles.inputBox}
+            onChangeText={(text) => this.setState({text})}
+            value={this.state.text}
+          />
 
-        {!this.state.isValid &&
-          <Text style={styles.validationText}>Enter valid title</Text>
-        }
+          {!this.state.isValid &&
+            <Text style={styles.validationText}>Enter valid title</Text>
+          }
 
+          {this.state.isDuplicateTitle &&
+            <Text style={styles.validationText}>Title already exists</Text>
+          }
+        </View>
         <TouchableOpacity
           style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
           onPress={this.onPress}>
@@ -60,30 +85,62 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
+  },
+  title:{
+    fontSize: 22,
+    textAlign: 'center',
+  },
+  inputBoxWrapper:{
+    alignItems: 'center',
+    width: '100%',
+    height: 55,
   },
   inputBox:{
     height: 40,
-    width: '50%',
-    borderColor: 'gray',
+    width: '60%',
+    borderColor: '#E5E5E5',
+    borderRadius: 3,
     borderWidth: 1
   },
   validationText: {
-
+    color: pink,
   },
-  iosSubmitBtn:{
-
+  iosSubmitBtn: {
+    backgroundColor: green,
+    padding: 10,
+    borderRadius: 7,
+    height: 45,
+    marginLeft: 40,
+    marginRight: 40,
   },
-  AndroidSubmitBtn:{
-
+  AndroidSubmitBtn: {
+    backgroundColor: green,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   submitBtnText: {
-
-  }
+    color: white,
+    fontSize: 22,
+    textAlign: 'center',
+  },
 });
 
 const mapDispatchToProps = dispatch => ({
-  addDeck: deck => dispatch(addDeck(deck))
+  addDeck: deck => dispatch(addDeck(deck)),
+  getAllDecksList: () => dispatch(getDeckList())
 });
 
-export default connect(null, mapDispatchToProps)(AddDeckView)
+const mapStateToProps = state => {
+  let decks = {};
+  state.decks.forEach(deck => decks[deck.title.toLowerCase()] = deck);
+  return {decks};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddDeckView)
