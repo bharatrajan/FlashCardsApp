@@ -121,9 +121,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => {
-  console.log("state : ", state);
   return {
-    cardCount : {},
     cardList : state.cards,
     deckList : _.orderBy(state.decks, ['timeStamp'], ['desc'])
   }

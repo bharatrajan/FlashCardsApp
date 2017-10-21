@@ -21,7 +21,6 @@ class AddDeckView extends React.Component {
   onPress = () => {
     const {text, isValid, isDuplicateTitle} = this.state;
     const {decks} = this.props;
-    console.log("decks : ", decks)
     if(!text){
       this.setState({
         isValid : false,
