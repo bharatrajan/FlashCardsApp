@@ -6,7 +6,7 @@ import { View,
          TouchableOpacity
        } from 'react-native'
 import { connect } from 'react-redux'
-import { addQuestion } from '../actions';
+import { deleteQuestion } from '../actions';
 import { FontAwesome } from '@expo/vector-icons'
 import util from '../utils'
 import _ from 'lodash';
@@ -42,9 +42,9 @@ class Quiz extends React.Component {
     })
   }
 
-  delete = () => {
+  delete = () =>
+    this.props.deleteQuestion(this.props.quiz.id)
 
-  }
 
   render() {
     const {flip, hideClass} = this.state;
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addQuestion: (quiz) => dispatch(addQuestion(quiz))
+  deleteQuestion: (quizId) => dispatch(deleteQuestion(quizId))
 });
 
 export default connect(null, mapDispatchToProps)(Quiz)

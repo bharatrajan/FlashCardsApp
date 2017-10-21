@@ -67,8 +67,16 @@ export function deleteDeck () {
   }
 }
 
-export function deleteQuestion () {
-  return {
-    type: ACTIONS_ENUM.DELETE_QUESTION
-  }
+export const deleteQuestion = (cardId) => dispatch => {
+  AsyncStorage.getItem('cardList').then(cardListAsString =>{
+    let cardList = JSON.parse(cardListAsString) || [];
+        console.log("cardList : ", cardList);
+        console.log("cardId : ", cardId);
+
+        let newList = cardList.filter(card => card.id !== cardId);
+            newList = JSON.stringify(newList);
+    AsyncStorage.setItem('cardList', newList).then(() =>{
+      return dispatch(recieveCardList(JSON.parse(newList)))
+    })
+  });
 }
