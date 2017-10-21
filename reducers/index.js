@@ -31,9 +31,9 @@ function decksReducer (deckList = mainState.deckList, action) {
 function cardsReducer (cards = mainState.cards, action) {
   switch (action.type) {
     case ACTIONS_ENUM.RECIEVE_CARD_LIST :
-      return {
-        ...cards,
-      }
+      cards = action.cardList || [];
+      return cards.filter(item => true);
+
     case ACTIONS_ENUM.GET_CARD_LIST :
       return {
         ...cards,

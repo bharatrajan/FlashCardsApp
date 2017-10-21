@@ -18,9 +18,10 @@ export function recieveDeckList (deckList) {
   }
 }
 
-export function recieveCardList () {
+export function recieveCardList (cardList) {
   return {
-    type: ACTIONS_ENUM.RECIEVE_CARD_LIST
+    type: ACTIONS_ENUM.RECIEVE_CARD_LIST,
+    cardList
   }
 }
 
@@ -30,11 +31,10 @@ export const getDeckList = () => dispatch => {
   );
 }
 
-
-export function getCardList () {
-  return {
-    type: ACTIONS_ENUM.GET_CARD_LIST
-  }
+export const getCardList = () => dispatch => {
+  AsyncStorage.getItem('cardList').then(cardListAsString => {
+    return dispatch(recieveCardList(JSON.parse(cardListAsString)))
+  });
 }
 
 export const addDeck = (deck) => dispatch => {

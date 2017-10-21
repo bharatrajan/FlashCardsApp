@@ -10,14 +10,28 @@ import {
   FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash';
-import { getDeckList, recieveDeckList } from '../actions';
+import { getDeckList, getCardList } from '../actions';
 import { purple, white, green } from '../utils/colors'
+import { NavigationActions } from 'react-navigation'
 
 class DeckListView extends React.Component {
 
   componentDidMount = () => {
+    this.props.getCardList()
     this.props.getAllDecksList()
   }
+
+  getCardCounts = deckId => {
+    let count = 0, {cardList} = this.props;
+    cardList.forEach( card => {
+      if(card.deckId === deckId) count++;
+    })
+    return count;
+  }
+
+  onPress = (deck) =>
+    this.props.navigation.navigate('SingleDeck',{ deck });
+
 
   render() {
     const {deckList} = this.props;
@@ -39,10 +53,10 @@ class DeckListView extends React.Component {
                 return(
                   <TouchableOpacity
                     style={styles.row}
-                    onPress={this.onPress}>
+                    onPress={() => this.onPress(item)}>
                       <View style={styles.deckRow}>
                         <Text style={styles.deckTitleText}> {item.title}</Text>
-                        <Text style={styles.deckCardText}>  (0) Cards</Text>
+                        <Text style={styles.deckCardText}>  {this.getCardCounts(item.id)} Cards</Text>
                       </View>
                   </TouchableOpacity>
                 )
@@ -109,12 +123,15 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch => ({
+  getCardList: () => dispatch(getCardList()),
   getAllDecksList: () => dispatch(getDeckList())
 });
 
 const mapStateToProps = state => {
-  console.log("state : ", _.orderBy(state.decks, ['timeStamp'], ['desc']));
+  console.log("state : ", state);
   return {
+    cardCount : {},
+    cardList : state.cards,
     deckList : _.orderBy(state.decks, ['timeStamp'], ['desc'])
   }
 };

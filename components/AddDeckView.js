@@ -42,9 +42,10 @@ class AddDeckView extends React.Component {
       });
       this.setState({
         isValid : true,
+        text : "",
         isDuplicateTitle : false,
       });
-      //this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeckView'}))
+      this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeckView'}))
     }
   }
 
@@ -85,6 +86,10 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#fff',
     alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
     justifyContent: 'space-around',
   },
   title:{
