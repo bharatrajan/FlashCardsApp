@@ -4,49 +4,68 @@ import { connect } from 'react-redux'
 import { getCardList } from '../actions';
 import util from '../utils'
 import _ from 'lodash';
+import { Ionicons } from '@expo/vector-icons'
 import { NavigationActions } from 'react-navigation'
 import { purple, white, green, pink, grey } from '../utils/colors'
 
 class SingleDeck extends React.Component {
+  static navigationOptions = ({navigation, screenProps}) => {
+    return {
+      headerRight: (
+            <TouchableOpacity
+              style={{paddingRight:10}}
+              onPress={() => {
+                navigation.setParams({"delete": new Date().getTime()})
+              }}
+            >
+              <Ionicons name='ios-trash' size={28} color={white} />
+            </TouchableOpacity>
+       )
+    }
+  }
+
+  componentWillUpdate = (newProps) => {
+    if(this.props.navigation.state.params.delete !=
+        newProps.navigation.state.params.delete)
+          this.deleteDeck()
+  }
+
+  deleteDeck = () => {
+    //TODO: Delete this Deck & cards
+  }
 
   componentDidMount = () => {
     this.props.getCardList()
   }
 
-  getCardCounts = deckId => {
-    let count = 0, {quizes} = this.props;
-    quizes.forEach( quizes => {
-      if(quizes.deckId === deckId) count++;
-    })
-    return count;
-  }
-
   onStartQuizPress = () => {
+
   }
 
   onAddQuizPress = () => {
+    this.props.navigation.navigate('AddQuiz',{ deck : this.props.deck });
   }
 
   render() {
-    const {deck} = this.props
+    const {deck, quizes} = this.props
     if(!deck) return null;
     return (
       <View style={styles.container}>
         <View style={styles.inputBoxWrapper}>
           <Text style={styles.title}>{deck.title}</Text>
           <Text ></Text>
-          <Text style={styles.subTitle}>{this.getCardCounts(deck.id)} cards</Text>
+          <Text style={styles.subTitle}>{util.getCardCounts(deck.id, quizes)}</Text>
         </View>
         <View>
         <TouchableOpacity
           style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
-          onPress={this.onPress}>
+          onPress={this.onAddQuizPress}>
             <Text style={styles.submitBtnText}>ADD QUIZ</Text>
         </TouchableOpacity>
         <Text></Text>
         <TouchableOpacity
           style={styles.whiteButton}
-          onPress={this.onPress}>
+          onPress={this.onStartQuizPress}>
             <Text style={styles.whiteButtonText}>START QUIZ</Text>
         </TouchableOpacity>
         </View>
@@ -70,11 +89,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   title:{
-    fontSize: 25,
+    fontSize: 35,
+    fontWeight: '200',
     textAlign: 'center',
   },
   subTitle:{
     fontSize: 15,
+    fontWeight: 'bold',
     textAlign: 'center',
   },
   whiteButton:{

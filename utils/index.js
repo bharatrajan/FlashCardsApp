@@ -7,8 +7,25 @@ let util = {
     });
   },
 
+  getCardCounts : function(deckId, cardList){
+    let count = 0;
+    cardList.forEach( card => {
+      if(card.deckId === deckId) count++;
+    })
+    return count > 1 ? `${count} cards` : `${count} card`
+  },
+
   capitalizeFirstLetter : function(str) { //capitalizeFirstLetter
         return str.charAt(0).toUpperCase() + str.slice(1);
+  },
+
+  compressText : function (str, compressToLength ) { //capitalizeFirstLetter
+        var localCompressToLength = compressToLength || 15;
+            localCompressToLength = localCompressToLength - 3;
+        if(str.length > localCompressToLength)
+            return str.substring(0, localCompressToLength) + "...";
+        else
+            return str.toString();
   }
 
 };

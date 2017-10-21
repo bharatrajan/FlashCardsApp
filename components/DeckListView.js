@@ -10,6 +10,7 @@ import {
   FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash';
+import util from '../utils'
 import { getDeckList, getCardList } from '../actions';
 import { purple, white, green } from '../utils/colors'
 import { NavigationActions } from 'react-navigation'
@@ -21,20 +22,12 @@ class DeckListView extends React.Component {
     this.props.getAllDecksList()
   }
 
-  getCardCounts = deckId => {
-    let count = 0, {cardList} = this.props;
-    cardList.forEach( card => {
-      if(card.deckId === deckId) count++;
-    })
-    return count;
-  }
-
   onPress = (deck) =>
     this.props.navigation.navigate('SingleDeck',{ deck });
 
 
   render() {
-    const {deckList} = this.props;
+    const {deckList, cardList} = this.props;
     return (
       <View style={styles.container}>
         { _.isEmpty(deckList) &&
@@ -56,7 +49,7 @@ class DeckListView extends React.Component {
                     onPress={() => this.onPress(item)}>
                       <View style={styles.deckRow}>
                         <Text style={styles.deckTitleText}> {item.title}</Text>
-                        <Text style={styles.deckCardText}>  {this.getCardCounts(item.id)} Cards</Text>
+                        <Text style={styles.deckCardText}>  {util.getCardCounts(item.id, cardList)}</Text>
                       </View>
                   </TouchableOpacity>
                 )

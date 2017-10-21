@@ -49,12 +49,17 @@ export const addDeck = (deck) => dispatch => {
   });
 }
 
-export function addQuestion () {
-  return {
-    type: ACTIONS_ENUM.ADD_QUESTION
-  }
+export const addQuestion = (card) => dispatch => {
+  AsyncStorage.getItem('cardList').then(cardListAsString =>{
+    let cardList = JSON.parse(cardListAsString);
+        //cardList = [];
+        cardList.push(card);
+        cardList = JSON.stringify(cardList);
+    AsyncStorage.setItem('cardList', cardList).then(() =>{
+      return dispatch(recieveCardList(JSON.parse(cardList)))
+    })
+  });
 }
-
 
 export function deleteDeck () {
   return {

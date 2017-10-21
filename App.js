@@ -70,7 +70,16 @@ const MainNavigator = StackNavigator({
         backgroundColor: green,
       }
     }
-  }
+  },
+  AddQuiz: {
+    screen: AddQuiz,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: green,
+      }
+    }
+  },
 })
 
 
@@ -82,7 +91,7 @@ export default class App extends React.Component {
       <Provider store={store}>
           <View style={styles.container} >
             <LocalStatusBar backgroundColor={green} barStyle="light-content"></LocalStatusBar>
-            <AddQuiz/>
+            <MainNavigator/>
           </View>
         </Provider>
     );
