@@ -39,7 +39,7 @@ class SingleDeck extends React.Component {
   }
 
   onStartQuizPress = () => {
-
+    this.props.navigation.navigate('TakeQuiz',{ deck : this.props.deck });
   }
 
   onAddQuizPress = () => {
@@ -49,12 +49,17 @@ class SingleDeck extends React.Component {
   render() {
     const {deck, quizes} = this.props
     if(!deck) return null;
+
+
+    const cardCountText = util.getCardCounts(deck.id, quizes);
+    const cardCount = cardCountText.split(" card")[0];
+
     return (
       <View style={styles.container}>
-        <View style={styles.inputBoxWrapper}>
+        <View>
           <Text style={styles.title}>{deck.title}</Text>
           <Text ></Text>
-          <Text style={styles.subTitle}>{util.getCardCounts(deck.id, quizes)}</Text>
+          <Text style={styles.subTitle}>{cardCountText}</Text>
         </View>
         <View>
         <TouchableOpacity
@@ -63,11 +68,13 @@ class SingleDeck extends React.Component {
             <Text style={styles.submitBtnText}>ADD QUIZ</Text>
         </TouchableOpacity>
         <Text></Text>
-        <TouchableOpacity
-          style={styles.whiteButton}
-          onPress={this.onStartQuizPress}>
-            <Text style={styles.whiteButtonText}>START QUIZ</Text>
-        </TouchableOpacity>
+        {cardCount > 0 &&
+          <TouchableOpacity
+            style={styles.whiteButton}
+            onPress={this.onStartQuizPress}>
+              <Text style={styles.whiteButtonText}>START QUIZ</Text>
+          </TouchableOpacity>
+        }
         </View>
       </View>
     );
@@ -95,7 +102,7 @@ const styles = StyleSheet.create({
   },
   subTitle:{
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: '600',
     textAlign: 'center',
   },
   whiteButton:{

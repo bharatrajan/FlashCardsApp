@@ -4,6 +4,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 import AddDeckView from './components/AddDeckView.js'
 import DeckListView from './components/DeckListView.js'
 import SingleDeck from './components/SingleDeck.js'
+import TakeQuiz from './components/TakeQuiz.js'
 import AddQuiz from './components/AddQuiz.js'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux';
@@ -80,9 +81,16 @@ const MainNavigator = StackNavigator({
       }
     }
   },
+  TakeQuiz:{
+    screen: TakeQuiz,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: green,
+      }
+    }
+  }
 })
-
-
 
 
 export default class App extends React.Component {

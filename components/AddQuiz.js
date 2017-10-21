@@ -96,6 +96,8 @@ class AddQuiz extends React.Component {
           onPress={this.addQuiz}>
             <Text style={styles.submitBtnText}>SUBMIT</Text>
         </TouchableOpacity>
+
+        <Text style={styles.validationText}></Text>
       </View>
     );
   }

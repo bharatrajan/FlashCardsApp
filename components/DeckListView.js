@@ -78,9 +78,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title:{
-    fontSize: 17.5,
+    fontSize: 25,
+    fontWeight: "200",
     alignItems: 'center',
-    paddingTop: 12.5,
+    paddingTop: 10,
     justifyContent: 'center',
     width: '100%',
     height: 50
@@ -108,11 +109,12 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   deckTitleText: {
-    fontSize: 17.5
+    fontSize: 17.5,
+    fontWeight: "300",
   },
   deckCardText: {
     fontSize: 11,
-    fontWeight: "bold"
+    fontWeight: "600"
   }
 });
 
