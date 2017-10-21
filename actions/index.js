@@ -39,7 +39,7 @@ export const getCardList = () => dispatch => {
 
 export const addDeck = (deck) => dispatch => {
   AsyncStorage.getItem('deckList').then(deckListAsString =>{
-    let deckList = JSON.parse(deckListAsString);
+    let deckList = JSON.parse(deckListAsString) || [];
         //deckList = [];
         deckList.push(deck);
         deckList = JSON.stringify(deckList);
@@ -51,7 +51,7 @@ export const addDeck = (deck) => dispatch => {
 
 export const addQuestion = (card) => dispatch => {
   AsyncStorage.getItem('cardList').then(cardListAsString =>{
-    let cardList = JSON.parse(cardListAsString);
+    let cardList = JSON.parse(cardListAsString) || [];
         //cardList = [];
         cardList.push(card);
         cardList = JSON.stringify(cardList);

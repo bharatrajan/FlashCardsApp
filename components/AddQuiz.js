@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { View,
-         Button,
          Text,
          StyleSheet,
          Platform,
          AsyncStorage,
+         TouchableOpacity,
+         Button,
          TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { addQuestion } from '../actions';
+import { FontAwesome } from '@expo/vector-icons'
 import util from '../utils'
 import _ from 'lodash';
 import { NavigationActions } from 'react-navigation'
@@ -16,22 +18,8 @@ import { white, green, pink, grey, lightGrey } from '../utils/colors'
 class AddQuiz extends React.Component {
   static navigationOptions = ({navigation, screenProps}) => {
     return {
-      title: util.compressText(navigation.state.params.deck.title),
-      headerRight: (
-            <Button
-              title="Add"
-              onPress={() => {
-                navigation.setParams({"add": new Date().getTime()})
-              }}
-            ></Button>
-       )
+      title: util.compressText(navigation.state.params.deck.title)
     }
-  }
-
-  componentWillUpdate = (newProps) => {
-    if(this.props.navigation.state.params.add !=
-        newProps.navigation.state.params.add)
-          this.addQuiz()
   }
 
   addQuiz = () => {
@@ -76,6 +64,7 @@ class AddQuiz extends React.Component {
         <View style={styles.inputBoxWrapper}>
           <TextInput
             style={styles.inputBox}
+            numberOfLines={6}
             multiline={true}
             placeholder={"Question ..."}
             placeholderTextColor={grey}
@@ -101,6 +90,12 @@ class AddQuiz extends React.Component {
               isAnswerValid ? "" : "Enter valid Answer"
           }</Text>
         </View>
+
+        <TouchableOpacity
+          style={styles.SubmitBtn}
+          onPress={this.addQuiz}>
+            <Text style={styles.submitBtnText}>SUBMIT</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -124,7 +119,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     alignItems: 'center',
     width: '100%',
-    height: '50%',
+    height: '45%',
   },
   inputBox:{
     backgroundColor: white,
@@ -136,6 +131,19 @@ const styles = StyleSheet.create({
   },
   validationText: {
     color: pink,
+  },
+  SubmitBtn: {
+    backgroundColor: green,
+    padding: 10,
+    borderRadius: 7,
+    height: 45,
+    marginLeft: 40,
+    marginRight: 40,
+  },
+  submitBtnText: {
+    color: white,
+    fontSize: 22,
+    textAlign: 'center',
   },
 });
 

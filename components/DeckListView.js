@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
   },
   deckRow:{
     flex: 1,
+    paddingLeft: 5,
     alignItems: 'flex-start',
   },
   deckTitleText: {

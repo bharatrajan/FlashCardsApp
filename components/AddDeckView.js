@@ -68,7 +68,7 @@ class AddDeckView extends React.Component {
           }
         </View>
         <TouchableOpacity
-          style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
+          style={styles.SubmitBtn}
           onPress={this.onPress}>
             <Text style={styles.submitBtnText}>SUBMIT</Text>
         </TouchableOpacity>
@@ -110,24 +110,13 @@ const styles = StyleSheet.create({
   validationText: {
     color: pink,
   },
-  iosSubmitBtn: {
+  SubmitBtn: {
     backgroundColor: green,
     padding: 10,
     borderRadius: 7,
     height: 45,
     marginLeft: 40,
     marginRight: 40,
-  },
-  AndroidSubmitBtn: {
-    backgroundColor: green,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    height: 45,
-    borderRadius: 2,
-    alignSelf: 'flex-end',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   submitBtnText: {
     color: white,
