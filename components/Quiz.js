@@ -12,6 +12,7 @@ import util from '../utils'
 import _ from 'lodash';
 import { white, green, pink, grey, lightGrey, red } from '../utils/colors'
 import { Constants } from 'expo'
+import { Ionicons } from '@expo/vector-icons'
 
 const screenDimensions = Dimensions.get('window');
 
@@ -41,11 +42,25 @@ class Quiz extends React.Component {
     })
   }
 
+  delete = () => {
+
+  }
+
   render() {
     const {flip, hideClass} = this.state;
+    const {quizIndex, quizLength} = this.props;
     const {answer, question} = this.props.quiz;
     return (
       <View style={[styles.container, hideClass]}>
+        <View style={styles.header}>
+          <Text style={[styles.headerElements, {paddingTop: 5}]}>
+            { `${quizIndex} of ${quizLength}` }
+          </Text>
+          <TouchableOpacity onPress={this.delete} style={styles.headerElements}>
+            <Ionicons name='ios-trash' size={28} color={red} />
+          </TouchableOpacity>
+        </View>
+
       {flip &&
         <View>
           <Text style={styles.title}>{question}</Text>
@@ -98,7 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: white,
     borderRadius: 10,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     shadowColor: 'rgba(0, 0, 0, 0.24)',
     shadowOffset: {
       width: 0,
@@ -106,6 +121,20 @@ const styles = StyleSheet.create({
     },
     shadowRadius: 6,
     shadowOpacity: 1,
+  },
+  header:{
+    maxHeight: 33,
+    width: screenDimensions.width - 50,
+    paddingLeft: 10,
+    paddingRight: 10,
+    flex: 1,
+    flexDirection:'row',
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'space-between',
+  },
+  headerElements:{
+    height: 30
   },
   title:{
     fontSize: 25,

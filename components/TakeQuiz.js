@@ -46,23 +46,37 @@ class TakeQuiz extends React.Component {
     });
   }
 
-  shouldComponentUpdate = (newProps, newState) => {
-    if(newState.counter === newProps.quizes.length) newProps.navigation.goBack()
-    return false
-  }
-
-  render() {
-    let {quizes} = this.props;
-    return (
+  renderQuizes = (quizes) =>
       <View style={styles.container}>
         <FlatList
           horizontal={true}
           data={quizes}
           keyExtractor={(item, index) => index}
-          renderItem={({item}) => <Quiz quiz={item} key={item.id} onButtonPress={this.onButtonPress}/>}
+          renderItem={({item, index}) =>
+            <Quiz
+              quiz={item}
+              key={item.id}
+              quizIndex={index + 1}
+              quizLength={quizes.length}
+              onButtonPress={this.onButtonPress}
+              />
+          }
         />
       </View>
-    );
+
+  renderInfoMessage = () =>
+      <View style={styles.container}>
+        <View style={styles.infoBox}>
+          <Text> All done in this deck </Text>
+        </View>
+      </View>
+
+  render() {
+    let {quizes} = this.props;
+    let {counter} = this.state;
+    return (counter !== quizes.length) ?
+           this.renderQuizes(quizes) :
+           this.renderInfoMessage()
   }
 }
 
@@ -71,6 +85,13 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
+  },
+  infoBox: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
 

@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: '#E5E5E5',
     alignItems: 'center',
     position: 'absolute',
     top: 0,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   whiteButton:{
-    backgroundColor: white,
+    backgroundColor: "#E5E5E5",
     borderWidth: 1,
     borderColor: grey,
     padding: 10,
