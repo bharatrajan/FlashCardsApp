@@ -24,23 +24,27 @@ class DeckListView extends React.Component {
     return (
       <View style={styles.container}>
         { _.isEmpty(deckList) &&
-          <View>
-            <Text> No Decks Added </Text>
-            <Text> Please add a deck </Text>
+          <View style={styles.defaultText}>
+            <Text> No Decks added </Text>
+            <Text> Please add a Deck </Text>
           </View> }
 
         { !_.isEmpty(deckList) &&
           <View>
-            <Text> My Decks </Text>
+            <Text style={styles.title}> MY DECKS </Text>
             <FlatList
               data={deckList}
               keyExtractor={item => item.id}
               renderItem={({item}) => {
                 return(
-                  <View style={styles.row}>
-                    <Text>{item.title}</Text>
-                    <Text> (0) Cards </Text>
-                  </View>
+                  <TouchableOpacity
+                    style={styles.row}
+                    onPress={this.onPress}>
+                      <View style={styles.deckRow}>
+                        <Text style={styles.deckTitleText}> {item.title}</Text>
+                        <Text style={styles.deckCardText}>  (0) Cards</Text>
+                      </View>
+                  </TouchableOpacity>
                 )
               }}
             />
@@ -53,17 +57,55 @@ class DeckListView extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
     flex: 1,
     width: '100%',
     height: '100%',
+    padding: 6,
     backgroundColor: '#E5E5E5',
   },
-  row: {
-    backgroundColor: '#FFF',
-    flexDirection: 'row',
-    flex: 1,
-    height: 45
+  defaultText:{
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
+  title:{
+    fontSize: 17.5,
+    alignItems: 'center',
+    paddingTop: 12.5,
+    justifyContent: 'center',
+    width: '100%',
+    height: 50
+  },
+  row: {
+    shadowOffset:{
+        width: 2,
+        height: 2,
+    },
+    shadowColor: 'rgba(0,0,0,.16)',
+    shadowOpacity: 0.3,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    minHeight: 85,
+    width: '100%',
+    backgroundColor: '#FFF',
+    margin: 2.5,
+    borderRadius: 7,
+  },
+  deckRow:{
+    flex: 1,
+    alignItems: 'flex-start',
+  },
+  deckTitleText: {
+    fontSize: 17.5
+  },
+  deckCardText: {
+    fontSize: 11,
+    fontWeight: "bold"
+  }
 });
 
 const mapDispatchToProps = dispatch => ({
