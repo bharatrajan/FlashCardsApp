@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Text, StyleSheet, Platform, AsyncStorage, TextInput } from 'react-native'
 import { connect } from 'react-redux'
-import { getCardList } from '../actions';
+import { getCardList, deleteQuestion, deleteDeck } from '../actions';
 import util from '../utils'
 import _ from 'lodash';
 import { Ionicons } from '@expo/vector-icons'
@@ -31,7 +31,10 @@ class SingleDeck extends React.Component {
   }
 
   deleteDeck = () => {
-    //TODO: Delete this Deck & cards
+    const {deck, quizes, deleteDeck, deleteQuestion, navigation} = this.props;
+    deleteDeck(deck.id);
+    quizes.forEach( quiz => deleteQuestion(quiz.id));
+    navigation.goBack();
   }
 
   componentDidMount = () => {
@@ -136,7 +139,9 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getCardList: () => dispatch(getCardList())
+  getCardList: () => dispatch(getCardList()),
+  deleteDeck: (deckId) => dispatch(deleteDeck(deckId)),
+  deleteQuestion: (cardId) => dispatch(deleteQuestion(cardId)),
 });
 
 const mapStateToProps = (state, { navigation }) => {
