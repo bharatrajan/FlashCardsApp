@@ -6,9 +6,9 @@
     "description": "A simple flash card app. Good for practising quizes.",
     "slug": "FlashCardsApp",
     "version": "1.0",
-    "icon": "",
+    "icon": "https://github.com/bharatrajan/FlashCardsApp/blob/master/icons/fla.png",
     "notification": {
-      "icon": ""
+      "icon": "https://github.com/bharatrajan/FlashCardsApp/blob/master/icons/fla.png"
     },
     "ios": {
      "bundleIdentifier": "org.flashcardsapp.exp",
