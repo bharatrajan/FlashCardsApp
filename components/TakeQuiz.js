@@ -12,6 +12,8 @@ import _ from 'lodash';
 import Quiz from './Quiz';
 import { NavigationActions, TabNavigator } from 'react-navigation'
 import { white, green, pink, grey, lightGrey, red } from '../utils/colors'
+import { clearLocalNotification, setLocalNotification } from '../utils/notif'
+
 
 function redView (){
   return(
@@ -38,6 +40,8 @@ class TakeQuiz extends React.Component {
 
   componentDidMount = () => {
     this.props.getCardList()
+    clearLocalNotification()
+    setLocalNotification()
   }
 
   onButtonPress = () => {
@@ -66,9 +70,7 @@ class TakeQuiz extends React.Component {
 
   renderInfoMessage = () =>
       <View style={styles.container}>
-        <View style={styles.infoBox}>
-          <Text> All done in this deck </Text>
-        </View>
+        <Text> All done in this deck </Text>
       </View>
 
   render() {
@@ -82,11 +84,6 @@ class TakeQuiz extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-  },
-  infoBox: {
     flex: 1,
     width: '100%',
     height: '100%',

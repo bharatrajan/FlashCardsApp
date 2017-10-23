@@ -11,6 +11,7 @@ import { createStore, applyMiddleware } from 'redux';
 import reducer from './reducers';
 import thunk from 'redux-thunk';
 import { purple, white, green } from './utils/colors'
+import { setLocalNotification } from './utils/notif'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
 
@@ -94,6 +95,10 @@ const MainNavigator = StackNavigator({
 
 
 export default class App extends React.Component {
+  componentDidMount = () => {
+    setLocalNotification("App.js")
+  }
+
   render() {
     return (
       <Provider store={store}>
