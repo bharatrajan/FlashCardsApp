@@ -3,6 +3,7 @@ import { View,
          Text,
          StyleSheet,
          TouchableOpacity,
+         KeyboardAvoidingView,
          TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { addQuestion } from '../actions';
@@ -56,9 +57,10 @@ class AddQuiz extends React.Component {
   render() {
     const {isQuestionValid, isAnswerValid} = this.state;
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={styles.inputBoxWrapper}>
           <TextInput
+            autoCapitalize={'sentences'}
             style={styles.inputBox}
             numberOfLines={6}
             multiline={true}
@@ -94,7 +96,7 @@ class AddQuiz extends React.Component {
         </TouchableOpacity>
 
         <Text style={styles.validationText}></Text>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

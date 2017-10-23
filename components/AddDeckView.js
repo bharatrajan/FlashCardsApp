@@ -3,6 +3,7 @@ import { View,
          TouchableOpacity,
          Text,
          StyleSheet,
+         KeyboardAvoidingView,
          TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { addDeck, getDeckList } from '../actions';
@@ -54,10 +55,12 @@ class AddDeckView extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <Text style={styles.title}> ADD A TITLE </Text>
         <View style={styles.inputBoxWrapper}>
           <TextInput
+            autoFocus={true}
+            autoCapitalize={'sentences'}
             style={styles.inputBox}
             onChangeText={(text) => this.setState({text})}
             value={this.state.text}
@@ -76,7 +79,7 @@ class AddDeckView extends React.Component {
           onPress={this.onPress}>
             <Text style={styles.submitBtnText}>SUBMIT</Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
