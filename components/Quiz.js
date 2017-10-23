@@ -8,10 +8,7 @@ import { View,
 import { connect } from 'react-redux'
 import { deleteQuestion, incrementScore } from '../actions';
 import { FontAwesome } from '@expo/vector-icons'
-import util from '../utils'
-import _ from 'lodash';
-import { white, green, pink, grey, lightGrey, red } from '../utils/colors'
-import { Constants } from 'expo'
+import { white, green, pink, red } from '../utils/colors'
 import { Ionicons } from '@expo/vector-icons'
 
 const screenDimensions = Dimensions.get('window');

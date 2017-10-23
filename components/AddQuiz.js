@@ -2,18 +2,14 @@ import React, { Component } from 'react'
 import { View,
          Text,
          StyleSheet,
-         Platform,
-         AsyncStorage,
          TouchableOpacity,
-         Button,
          TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { addQuestion } from '../actions';
-import { FontAwesome } from '@expo/vector-icons'
 import util from '../utils'
 import _ from 'lodash';
 import { NavigationActions } from 'react-navigation'
-import { white, green, pink, grey, lightGrey } from '../utils/colors'
+import { white, green, pink, grey, lightGrey, coolGrey } from '../utils/colors'
 
 class AddQuiz extends React.Component {
   static navigationOptions = ({navigation, screenProps}) => {
@@ -127,7 +123,7 @@ const styles = StyleSheet.create({
     backgroundColor: white,
     height: '70%',
     width: '90%',
-    borderColor: '#E5E5E5',
+    borderColor: coolGrey,
     borderRadius: 3,
     borderWidth: 1
   },

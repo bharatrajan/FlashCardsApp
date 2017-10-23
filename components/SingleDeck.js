@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Text, StyleSheet, Platform, AsyncStorage, TextInput } from 'react-native'
+import { View,
+         TouchableOpacity,
+         Text,
+         StyleSheet} from 'react-native'
 import { connect } from 'react-redux'
 import { getCardList, deleteQuestion, deleteDeck } from '../actions';
 import util from '../utils'
-import _ from 'lodash';
 import { Ionicons } from '@expo/vector-icons'
 import { NavigationActions } from 'react-navigation'
-import { purple, white, green, pink, grey } from '../utils/colors'
+import { white, green, grey } from '../utils/colors'
 
 class SingleDeck extends React.Component {
   static navigationOptions = ({navigation, screenProps}) => {

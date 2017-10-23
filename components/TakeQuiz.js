@@ -2,16 +2,13 @@ import React, { Component } from 'react'
 import { View,
          Text,
          StyleSheet,
-         FlatList,
-         TextInput } from 'react-native'
+         FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import { getCardList } from '../actions';
-import { FontAwesome } from '@expo/vector-icons'
 import util from '../utils'
-import _ from 'lodash';
 import Quiz from './Quiz';
 import { NavigationActions, TabNavigator } from 'react-navigation'
-import { white, green, pink, grey, lightGrey, red } from '../utils/colors'
+import { pink, red } from '../utils/colors'
 import { clearLocalNotification, setLocalNotification } from '../utils/notif'
 
 

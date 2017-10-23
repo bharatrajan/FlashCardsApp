@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash';
 import util from '../utils'
 import { getDeckList, getCardList, resetScore } from '../actions';
-import { purple, white, green } from '../utils/colors'
+import { coolGrey, white } from '../utils/colors'
 import { NavigationActions } from 'react-navigation'
 
 class DeckListView extends React.Component {
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     padding: 6,
-    backgroundColor: '#E5E5E5',
+    backgroundColor: coolGrey,
   },
   center:{
     width: '100%',
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 85,
     width: '100%',
-    backgroundColor: '#FFF',
+    backgroundColor: white,
     margin: 2.5,
     borderRadius: 7,
   },

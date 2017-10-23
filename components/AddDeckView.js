@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Text, StyleSheet, Platform, AsyncStorage, TextInput } from 'react-native'
+import { View,
+         TouchableOpacity,
+         Text,
+         StyleSheet,
+         TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { addDeck, getDeckList } from '../actions';
 import util from '../utils'
 import _ from 'lodash';
 import { NavigationActions } from 'react-navigation'
-import { purple, white, green, pink, red } from '../utils/colors'
+import { white, green, pink, coolGrey} from '../utils/colors'
 
 class AddDeckView extends React.Component {
 
@@ -83,7 +87,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: white,
     alignItems: 'center',
     position: 'absolute',
     top: 0,
@@ -103,7 +107,7 @@ const styles = StyleSheet.create({
   inputBox:{
     height: 40,
     width: '60%',
-    borderColor: '#E5E5E5',
+    borderColor: coolGrey,
     borderRadius: 3,
     borderWidth: 1
   },

@@ -1,5 +1,20 @@
 {
   "expo": {
-    "sdkVersion": "21.0.0"
-  }
+    "sdkVersion": "21.0.0",
+    "orientation": "portrait",
+    "name": "FlashCardsApp",
+    "description": "A simple flash card app. Good for practising quizes.",
+    "slug": "FlashCardsApp",
+    "version": "1.0",
+    "icon": "",
+    "notification": {
+      "icon": ""
+    },
+    "ios": {
+     "bundleIdentifier": "org.flashcardsapp.exp",
+    },
+    "android": {
+     "package": "org.flashcardsapp.exp",
+    }
+  },
 }

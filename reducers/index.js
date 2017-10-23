@@ -1,5 +1,5 @@
-import { ACTIONS_ENUM } from '../actions'
 import { combineReducers } from 'redux';
+import { ACTIONS_ENUM } from '../actions/actionList'
 
 let mainState = {
   deckList: [],
