@@ -6,7 +6,7 @@ import { View,
          TouchableOpacity
        } from 'react-native'
 import { connect } from 'react-redux'
-import { deleteQuestion } from '../actions';
+import { deleteQuestion, incrementScore } from '../actions';
 import { FontAwesome } from '@expo/vector-icons'
 import util from '../utils'
 import _ from 'lodash';
@@ -32,7 +32,7 @@ class Quiz extends React.Component {
     this.setState({
       hideClass : {display : 'none'}
     })
-    //TODO : Update score
+    this.props.incrementScore();
   }
 
   onIncorrectPress = () => {
@@ -169,6 +169,7 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch => ({
+  incrementScore: () => dispatch(incrementScore()),
   deleteQuestion: (quizId) => dispatch(deleteQuestion(quizId))
 });
 

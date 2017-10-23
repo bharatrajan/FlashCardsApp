@@ -9,6 +9,7 @@ export const ACTIONS_ENUM = {
   'ADD_DECK' : 'ADD_DECK',
   'DELETE_CARD' : 'DELETE_CARD',
   'DELETE_DECK' : 'DELETE_DECK',
+  'RECIEVE_SCORE' : 'RECIEVE_SCORE',
 }
 
 export function recieveDeckList (deckList) {
@@ -61,22 +62,49 @@ export const addQuestion = (card) => dispatch => {
   });
 }
 
-export function deleteDeck () {
-  return {
-    type: ACTIONS_ENUM.DELETE_DECK
-  }
+export const deleteDeck = (deckId) => dispatch => {
+  AsyncStorage.getItem('deckList').then(deckListAsString =>{
+    let deckList = JSON.parse(deckListAsString) || [];
+    let newList = deckList.filter(deck => deck.id !== deckId);
+        newList = JSON.stringify(newList);
+    AsyncStorage.setItem('deckList', newList).then(() =>{
+      return dispatch(recieveDeckList(JSON.parse(newList)))
+    });
+  });
 }
 
 export const deleteQuestion = (cardId) => dispatch => {
   AsyncStorage.getItem('cardList').then(cardListAsString =>{
     let cardList = JSON.parse(cardListAsString) || [];
-        console.log("cardList : ", cardList);
-        console.log("cardId : ", cardId);
-
-        let newList = cardList.filter(card => card.id !== cardId);
-            newList = JSON.stringify(newList);
+    let newList = cardList.filter(card => card.id !== cardId);
+        newList = JSON.stringify(newList);
     AsyncStorage.setItem('cardList', newList).then(() =>{
       return dispatch(recieveCardList(JSON.parse(newList)))
     })
   });
+}
+
+export const resetScore = () => dispatch => {
+    AsyncStorage.setItem('score', '0').then(() =>{
+      return dispatch(recieveScore(0))
+    })
+}
+
+export const incrementScore = () => dispatch => {
+  AsyncStorage.getItem('score')
+    .then( parseInt )
+    .then( score => {
+        score++;
+        AsyncStorage.setItem('score', score.toString())
+        .then(() => dispatch(recieveScore(score)))
+    })
+}
+
+
+
+export function recieveScore (score) {
+  return {
+    type: ACTIONS_ENUM.RECIEVE_SCORE,
+    score
+  }
 }

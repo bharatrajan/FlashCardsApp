@@ -3,7 +3,8 @@ import { combineReducers } from 'redux';
 
 let mainState = {
   deckList: [],
-  cards: []
+  cards: [],
+  score: 0,
 };
 
 function decksReducer (deckList = mainState.deckList, action) {
@@ -12,17 +13,6 @@ function decksReducer (deckList = mainState.deckList, action) {
       deckList = action.deckList || [];
       return deckList.filter(item => true);
 
-    case ACTIONS_ENUM.GET_DECK_LIST :
-     return [];
-
-    case ACTIONS_ENUM.ADD_DECK :
-      return {
-        ...deckList,
-      }
-    case ACTIONS_ENUM.DELETE_DECK :
-      return {
-        ...deckList,
-      }
     default :
       return deckList
   }
@@ -34,25 +24,25 @@ function cardsReducer (cards = mainState.cards, action) {
       cards = action.cardList || [];
       return cards.filter(item => true);
 
-    case ACTIONS_ENUM.GET_CARD_LIST :
-      return {
-        ...cards,
-      }
-    case ACTIONS_ENUM.ADD_CARD :
-      return {
-        ...cards,
-      }
-    case ACTIONS_ENUM.DELETE_CARD :
-      return {
-        ...cards,
-      }
     default :
       return cards
   }
 }
 
 
+function scoreReducer (score = mainState.score, action) {
+  switch (action.type) {
+    case ACTIONS_ENUM.RECIEVE_SCORE :
+      newScore = action.score;
+      return newScore;
+
+    default :
+      return score
+  }
+}
+
 export default combineReducers({
   decks: decksReducer,
   cards: cardsReducer,
+  score: scoreReducer,
 });
