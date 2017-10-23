@@ -1,24 +1,40 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { View,
          Text,
          StyleSheet,
          TouchableOpacity,
          KeyboardAvoidingView,
-         TextInput } from 'react-native'
-import { connect } from 'react-redux'
+         TextInput } from 'react-native';
+import { connect } from 'react-redux';
 import { addQuestion } from '../actions';
-import util from '../utils'
+import util from '../utils';
 import _ from 'lodash';
-import { NavigationActions } from 'react-navigation'
-import { white, green, pink, grey, lightGrey, coolGrey } from '../utils/colors'
+import { NavigationActions } from 'react-navigation';
+import { white, green, pink, grey, lightGrey, coolGrey } from '../utils/colors';
 
+/**
+* @description - Add quiz view.
+* @component
+*/
 class AddQuiz extends React.Component {
+  /**
+  * @description - Sets heading for the current header
+  * @callBack
+  * @returns object containing title
+  */
   static navigationOptions = ({navigation, screenProps}) => {
     return {
       title: util.compressText(navigation.state.params.deck.title)
     }
   }
 
+  /**
+  * @description - Submit button event listener.
+  * @description - Contains validation, check for duplicate deck-name.
+  * @description - Dispatches addQuiz action .
+  * @eventListener
+  * @returns null
+  */
   addQuiz = () => {
     const {question, answer} = this.state;
     const isAnswerValid = !_.isEmpty(answer)
@@ -46,7 +62,9 @@ class AddQuiz extends React.Component {
     }
   }
 
-
+  /**
+  * @description - State object carrying validation booleans
+  */
   state = {
     isQuestionValid : true,
     isAnswerValid : true,
@@ -54,6 +72,12 @@ class AddQuiz extends React.Component {
     answer: "",
   }
 
+  /**
+  * @description - Renderer for this component
+  * @description - Carries HTML
+  * @lifeCycle
+  * @returns html template
+  */
   render() {
     const {isQuestionValid, isAnswerValid} = this.state;
     return (
@@ -101,6 +125,9 @@ class AddQuiz extends React.Component {
   }
 }
 
+/**
+* @description - Style object
+*/
 const styles = StyleSheet.create({
   container: {
     width: '100%',
@@ -147,10 +174,23 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+* @description - Maps action dispatchers to props of this component
+* @callBack
+* @param {object} dispatch - dispatch from store
+* @returns object containing dispatchers
+*/
 const mapDispatchToProps = dispatch => ({
   addQuestion: (quiz) => dispatch(addQuestion(quiz))
 });
 
+/**
+* @description - Maps updated state to props of this component
+* @callBack
+* @param {object} state - state from store
+* @param {object} navigation - props pushed from parent component
+* @returns deckId from parent
+*/
 const mapStateToProps = (state, { navigation }) => {
   return {
     deckId : navigation.state.params.deck.id

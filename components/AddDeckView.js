@@ -1,28 +1,47 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { View,
          TouchableOpacity,
          Text,
          StyleSheet,
          KeyboardAvoidingView,
-         TextInput } from 'react-native'
-import { connect } from 'react-redux'
+         TextInput } from 'react-native';
+import { connect } from 'react-redux';
 import { addDeck, getDeckList } from '../actions';
-import util from '../utils'
+import util from '../utils';
 import _ from 'lodash';
-import { NavigationActions } from 'react-navigation'
-import { white, green, pink, coolGrey} from '../utils/colors'
+import { NavigationActions } from 'react-navigation';
+import { white, green, pink, coolGrey} from '../utils/colors';
 
+/**
+* @description - Add deck view.
+* @component
+*/
 class AddDeckView extends React.Component {
-
+  /**
+  * @description - State object carrying validation booleans
+  */
   state = {
     isValid : true,
     isDuplicateTitle : false,
   }
 
+  /**
+  * @description - Gets all the Deck from AsyncStorage
+  * @lifeCycle
+  * @returns null
+  */
   componentDidMount = () => {
-    this.props.getAllDecksList()
+    this.props.getAllDecksList();
+    return null;
   }
 
+  /**
+  * @description - Submit button event listener.
+  * @description - Contains validation, check for duplicate deck-name.
+  * @description - Dispatches addDeck action then navigates to the previous screen
+  * @eventListener
+  * @returns null
+  */
   onPress = () => {
     const {text, isValid, isDuplicateTitle} = this.state;
     const {decks} = this.props;
@@ -49,10 +68,17 @@ class AddDeckView extends React.Component {
         text : "",
         isDuplicateTitle : false,
       });
-      this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeckView'}))
+      this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeckView'}));
+      return;
     }
   }
 
+  /**
+  * @description - Renderer for this component
+  * @description - Carries HTML
+  * @lifeCycle
+  * @returns html template
+  */
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -84,6 +110,9 @@ class AddDeckView extends React.Component {
   }
 }
 
+/**
+* @description - Style object
+*/
 const styles = StyleSheet.create({
   container: {
     width: '100%',
@@ -132,11 +161,23 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+* @description - Maps action dispatchers to props of this component
+* @callBack
+* @param {object} dispatch - dispatch from store
+* @returns object containing dispatchers
+*/
 const mapDispatchToProps = dispatch => ({
   addDeck: deck => dispatch(addDeck(deck)),
   getAllDecksList: () => dispatch(getDeckList())
 });
 
+/**
+* @description - Maps updated state to props of this component
+* @callBack
+* @param {object} state - state from store
+* @returns updated decks
+*/
 const mapStateToProps = state => {
   let decks = {};
   state.decks.forEach(deck => decks[deck.title.toLowerCase()] = deck);

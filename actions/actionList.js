@@ -1,3 +1,7 @@
+/**
+* @description - List of all possible actions as ENNUM
+* @enum
+*/
 export const ACTIONS_ENUM = {
   'RECIEVE_DECK_LIST' : 'RECIEVE_DECK_LIST',
   'RECIEVE_CARD_LIST' : 'RECIEVE_CARD_LIST',

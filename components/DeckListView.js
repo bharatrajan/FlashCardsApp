@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -6,20 +6,35 @@ import {
   Header,
   StyleSheet,
   ActivityIndicator,
-  FlatList } from 'react-native'
-import { connect } from 'react-redux'
+  FlatList } from 'react-native';
+import { connect } from 'react-redux';
 import _ from 'lodash';
-import util from '../utils'
+import util from '../utils';
 import { getDeckList, getCardList, resetScore } from '../actions';
-import { coolGrey, white } from '../utils/colors'
-import { NavigationActions } from 'react-navigation'
+import { coolGrey, white } from '../utils/colors';
+import { NavigationActions } from 'react-navigation';
 
+/**
+* @description - Displays the list of Desk list
+* @component
+*/
 class DeckListView extends React.Component {
 
+  /**
+  * @description - State object carrying validation booleans
+  */
   state = {
     showActivityIndicator : true
   }
 
+  /**
+  * @description - Gets all the Decks from AsyncStorage
+  * @description - Gets all the Cards from AsyncStorage
+  * @description - Initiates score in AsyncStorage
+  * @description - Initiates ActivityIndicator for 1 sec
+  * @lifeCycle
+  * @returns null
+  */
   componentDidMount = () => {
     setTimeout(() => {
       this.setState({
@@ -31,10 +46,21 @@ class DeckListView extends React.Component {
     this.props.getAllDecksList()
   }
 
+  /**
+  * @description - On-deck-press event listener.
+  * @description - Navigates to the SingleDeck screen
+  * @eventListener
+  * @returns null
+  */
   onPress = (deck) =>
     this.props.navigation.navigate('SingleDeck',{ deck });
 
-
+  /**
+  * @description - Renderer for this component
+  * @description - Carries HTML
+  * @lifeCycle
+  * @returns html template
+  */
   render() {
     const {deckList, cardList, score} = this.props;
     const { showActivityIndicator } = this.state;
@@ -85,6 +111,9 @@ class DeckListView extends React.Component {
   }
 }
 
+/**
+* @description - Style object
+*/
 const styles = StyleSheet.create({
   container: {
     width: '100%',
@@ -151,12 +180,24 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+* @description - Maps action dispatchers to props of this component
+* @callBack
+* @param {object} dispatch - dispatch from store
+* @returns object containing dispatchers
+*/
 const mapDispatchToProps = dispatch => ({
   resetScore: () => dispatch(resetScore()),
   getCardList: () => dispatch(getCardList()),
   getAllDecksList: () => dispatch(getDeckList())
 });
 
+/**
+* @description - Maps updated state to props of this component
+* @callBack
+* @param {object} state - state from store
+* @returns object with updated score, cardList, deckList
+*/
 const mapStateToProps = state => {
   return {
     score : state.score,

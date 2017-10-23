@@ -1,13 +1,27 @@
 import { AsyncStorage } from 'react-native'
 import { Notifications, Permissions } from 'expo'
 
+/**
+* @description - Field name under which localNotification
+* @description - flag is set inside AsyncStorage
+*/
 const NOTIFICATION_KEY = 'FlashCardsApp:notifications'
 
+/**
+* @description - Clears all local notifications
+* @util
+* @returns null
+*/
 export function clearLocalNotification () {
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync)
 }
 
+/**
+* @description - Creates a notification object
+* @factory
+* @returns notification object
+*/
 function createNotification () {
   return {
     title: 'Practice your quizes!',
@@ -24,6 +38,11 @@ function createNotification () {
   }
 }
 
+/**
+* @description - Sets local notification at 8PM every day
+* @util
+* @returns null
+*/
 export function setLocalNotification () {
   AsyncStorage.getItem(NOTIFICATION_KEY)
     .then(JSON.parse)

@@ -15,16 +15,27 @@ import { setLocalNotification } from './utils/notif'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
 
+/**
+* @description - Creates global store object
+*/
 const store = createStore(reducer, applyMiddleware(thunk));
 
-function LocalStatusBar ({backgroundColor, ...props}) {
+/**
+* @description - Status bar component wrapper with styles
+* @component
+*/
+function LocalStatusBar () {
   return (
-    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
-      <StatusBar translucent backgroundColor={green} {...props} />
+    <View style={{ backgroundColor:green, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={green} barStyle={"light-content"} />
     </View>
   )
 }
 
+/**
+* @description - Tab navigation object
+* @description - Contains "deckListView" & "AddDeckView"
+*/
 const Tabs = TabNavigator({
   DeckListView: {
     screen: DeckListView,
@@ -60,6 +71,10 @@ const Tabs = TabNavigator({
   }
 })
 
+/**
+* @description - Main navigation object: StackNavigator
+* @description - Contains "TabNavigator", "SingleDeck", "AddQuiz" & "TakeQuiz"
+*/
 const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs,
@@ -95,10 +110,20 @@ const MainNavigator = StackNavigator({
 
 
 export default class App extends React.Component {
-  componentDidMount = () => {
+  /**
+  * @description - Ask & set local Notifications
+  * @lifeCycle
+  * @returns null
+  */
+  componentDidMount = () =>
     setLocalNotification("App.js")
-  }
 
+  /**
+  * @description - Renderer for this component
+  * @description - Carries HTML
+  * @lifeCycle
+  * @returns html template
+  */
   render() {
     return (
       <Provider store={store}>
@@ -111,6 +136,9 @@ export default class App extends React.Component {
   }
 }
 
+/**
+* @description - Style object
+*/
 const styles = StyleSheet.create({
   container: {
     flex: 1,

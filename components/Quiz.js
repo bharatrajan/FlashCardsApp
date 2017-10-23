@@ -1,29 +1,53 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { View,
          Text,
          StyleSheet,
          Dimensions,
          TouchableOpacity
-       } from 'react-native'
-import { connect } from 'react-redux'
+       } from 'react-native';
+import { connect } from 'react-redux';
 import { deleteQuestion, incrementScore } from '../actions';
-import { FontAwesome } from '@expo/vector-icons'
-import { white, green, pink, red } from '../utils/colors'
-import { Ionicons } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons';
+import { white, green, pink, red } from '../utils/colors';
+import { Ionicons } from '@expo/vector-icons';
 
+/**
+* @description - Screen Dimensions for styling
+*/
 const screenDimensions = Dimensions.get('window');
 
+/**
+* @description - A single QUIZ card component
+* @component
+*/
 class Quiz extends React.Component {
+  /**
+  * @description - State object carrying validation booleans
+  */
   state = {
       flip : true,
       hideClass : {}
   }
 
+  /**
+  * @description - OnPress event listener.
+  * @description - Flips the card and shows answer from question( & Vise versa)
+  * @eventListener
+  * @returns null
+  */
   flipCard = () =>
       this.setState((prevState) => {
         return {flip: !prevState.flip};
       });
 
+  /**
+  * @description - OnPress event listener for the "CORRECT" button.
+  * @description - Removes this current card from screen.
+  * @description - Calls callBack from parent.
+  * @description - calls incrementScore action dispatcher.
+  * @eventListener
+  * @returns null
+  */
   onCorrectPress = () => {
     this.props.onButtonPress()
     this.setState({
@@ -32,6 +56,13 @@ class Quiz extends React.Component {
     this.props.incrementScore();
   }
 
+  /**
+  * @description - OnPress event listener for the "INCORRECT" button.
+  * @description - Removes this current card from screen.
+  * @description - Calls callBack from parent.
+  * @eventListener
+  * @returns null
+  */
   onIncorrectPress = () => {
     this.props.onButtonPress()
     this.setState({
@@ -39,10 +70,21 @@ class Quiz extends React.Component {
     })
   }
 
+  /**
+  * @description - OnPress event listener for trash icon.
+  * @description - Calls deleteQuestion actionDispatcher.
+  * @eventListener
+  * @returns null
+  */
   delete = () =>
     this.props.deleteQuestion(this.props.quiz.id)
 
-
+  /**
+  * @description - Renderer for this component
+  * @description - Carries HTML
+  * @lifeCycle
+  * @returns html template
+  */
   render() {
     const {flip, hideClass} = this.state;
     const {quizIndex, quizLength} = this.props;
@@ -97,6 +139,9 @@ class Quiz extends React.Component {
   }
 }
 
+/**
+* @description - Style object
+*/
 const styles = StyleSheet.create({
   hide:{
     display : 'none',
@@ -165,6 +210,12 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+* @description - Maps action dispatchers to props of this component
+* @callBack
+* @param {object} dispatch - dispatch from store
+* @returns object containing dispatchers
+*/
 const mapDispatchToProps = dispatch => ({
   incrementScore: () => dispatch(incrementScore()),
   deleteQuestion: (quizId) => dispatch(deleteQuestion(quizId))

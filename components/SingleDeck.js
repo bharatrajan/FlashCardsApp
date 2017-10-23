@@ -10,7 +10,16 @@ import { Ionicons } from '@expo/vector-icons'
 import { NavigationActions } from 'react-navigation'
 import { white, green, grey } from '../utils/colors'
 
+/**
+* @description - Displays a single deck
+* @component
+*/
 class SingleDeck extends React.Component {
+  /**
+  * @description - Sets right-icon for the current header
+  * @callBack
+  * @returns object containing right trash icon in header
+  */
   static navigationOptions = ({navigation, screenProps}) => {
     return {
       headerRight: (
@@ -26,12 +35,26 @@ class SingleDeck extends React.Component {
     }
   }
 
+  /**
+  * @description - Called everytime when props updates
+  * @description - If navigation.state.params.delete changes,
+  * @description - then calls delete method
+  * @lifeCycle
+  * @returns null
+  */
   componentWillUpdate = (newProps) => {
     if(this.props.navigation.state.params.delete !=
         newProps.navigation.state.params.delete)
           this.deleteDeck()
   }
 
+  /**
+  * @description - Calls deleteQuestion action dispatcher for
+  * @description - all quizes pertain to the current deckId.
+  * @description - Naviagates go previous screen.
+  * @description - Calls delete actionDispatcher for deck.
+  * @returns null
+  */
   deleteDeck = () => {
     const {deck, quizes, deleteDeck, deleteQuestion, navigation} = this.props;
     deleteDeck(deck.id);
@@ -39,18 +62,36 @@ class SingleDeck extends React.Component {
     navigation.goBack();
   }
 
-  componentDidMount = () => {
+  /**
+  * @description - Gets all the cards from AsyncStorage
+  * @lifeCycle
+  * @returns null
+  */
+  componentDidMount = () =>
     this.props.getCardList()
-  }
 
-  onStartQuizPress = () => {
+  /**
+  * @description - navigates to TakeQuiz screen.
+  * @eventListener
+  * @returns null
+  */
+  onStartQuizPress = () =>
     this.props.navigation.navigate('TakeQuiz',{ deck : this.props.deck });
-  }
 
-  onAddQuizPress = () => {
+  /**
+  * @description - navigates to AddQuiz screen.
+  * @eventListener
+  * @returns null
+  */
+  onAddQuizPress = () =>
     this.props.navigation.navigate('AddQuiz',{ deck : this.props.deck });
-  }
 
+  /**
+  * @description - Renderer for this component
+  * @description - Carries HTML
+  * @lifeCycle
+  * @returns html template
+  */
   render() {
     const {deck, quizes} = this.props
     if(!deck) return null;
@@ -86,6 +127,9 @@ class SingleDeck extends React.Component {
   }
 }
 
+/**
+* @description - Style object
+*/
 const styles = StyleSheet.create({
   container: {
     width: '100%',
@@ -140,12 +184,25 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+* @description - Maps action dispatchers to props of this component
+* @callBack
+* @param {object} dispatch - dispatch from store
+* @returns object containing dispatchers
+*/
 const mapDispatchToProps = dispatch => ({
   getCardList: () => dispatch(getCardList()),
   deleteDeck: (deckId) => dispatch(deleteDeck(deckId)),
   deleteQuestion: (cardId) => dispatch(deleteQuestion(cardId)),
 });
 
+/**
+* @description - Maps updated state to props of this component
+* @callBack
+* @param {object} state - state from store
+* @param {object} navigation - props pushed from parent component
+* @returns object with updated quizes from state & deck from parent
+*/
 const mapStateToProps = (state, { navigation }) => {
   return {
     quizes : state.cards,
