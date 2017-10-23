@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
-import { ACTIONS_ENUM } from '../actions/actionList'
+import { ACTIONS_ENUM } from '../actions/actionList';
 
 /**
 * @description - Default state object
 */
 let mainState = {
-  deckList: [],
-  cards: [],
-  score: 0,
+    deckList: [],
+    cards: [],
+    score: 0,
 };
 
 /**
@@ -19,14 +19,14 @@ let mainState = {
 * @returns deckList object
 */
 function decksReducer (deckList = mainState.deckList, action) {
-  switch (action.type) {
+    switch (action.type) {
     case ACTIONS_ENUM.RECIEVE_DECK_LIST :
-      deckList = action.deckList || [];
-      return deckList.filter(item => true);
+        deckList = action.deckList || [];
+        return deckList.filter(item => true);
 
     default :
-      return deckList
-  }
+        return deckList;
+    }
 }
 
 /**
@@ -38,14 +38,14 @@ function decksReducer (deckList = mainState.deckList, action) {
 * @returns cards object
 */
 function cardsReducer (cards = mainState.cards, action) {
-  switch (action.type) {
+    switch (action.type) {
     case ACTIONS_ENUM.RECIEVE_CARD_LIST :
-      cards = action.cardList || [];
-      return cards.filter(item => true);
+        cards = action.cardList || [];
+        return cards.filter(item => true);
 
     default :
-      return cards
-  }
+        return cards;
+    }
 }
 
 /**
@@ -57,18 +57,18 @@ function cardsReducer (cards = mainState.cards, action) {
 * @returns score integer
 */
 function scoreReducer (score = mainState.score, action) {
-  switch (action.type) {
+    switch (action.type) {
     case ACTIONS_ENUM.RECIEVE_SCORE :
-      newScore = action.score;
-      return newScore;
+        newScore = action.score;
+        return newScore;
 
     default :
-      return score
-  }
+        return score;
+    }
 }
 
 export default combineReducers({
-  decks: decksReducer,
-  cards: cardsReducer,
-  score: scoreReducer,
+    decks: decksReducer,
+    cards: cardsReducer,
+    score: scoreReducer,
 });

@@ -1,5 +1,5 @@
-import { AsyncStorage } from 'react-native'
-import { ACTIONS_ENUM } from './actionList'
+import { AsyncStorage } from 'react-native';
+import { ACTIONS_ENUM } from './actionList';
 
 /**
 * @description - Dispatches the action: RECIEVE_DECK_LIST
@@ -8,10 +8,10 @@ import { ACTIONS_ENUM } from './actionList'
 * @returns action-object
 */
 export function recieveDeckList (deckList) {
-  return {
-    type: ACTIONS_ENUM.RECIEVE_DECK_LIST,
-    deckList
-  }
+    return {
+        type: ACTIONS_ENUM.RECIEVE_DECK_LIST,
+        deckList
+    };
 }
 
 /**
@@ -21,10 +21,10 @@ export function recieveDeckList (deckList) {
 * @returns action-object
 */
 export function recieveCardList (cardList) {
-  return {
-    type: ACTIONS_ENUM.RECIEVE_CARD_LIST,
-    cardList
-  }
+    return {
+        type: ACTIONS_ENUM.RECIEVE_CARD_LIST,
+        cardList
+    };
 }
 
 /**
@@ -34,11 +34,11 @@ export function recieveCardList (cardList) {
 * @returns null
 */
 export const getDeckList = () => dispatch => {
-  AsyncStorage.getItem('deckList')
-    .then(deckListAsString =>
-      dispatch(recieveDeckList(JSON.parse(deckListAsString)))
-    );
-}
+    AsyncStorage.getItem('deckList')
+        .then(deckListAsString =>
+            dispatch(recieveDeckList(JSON.parse(deckListAsString)))
+        );
+};
 
 /**
 * @description - Gets cardList from AsyncStorage(localStorage)
@@ -47,11 +47,11 @@ export const getDeckList = () => dispatch => {
 * @returns null
 */
 export const getCardList = () => dispatch => {
-  AsyncStorage.getItem('cardList')
-    .then(cardListAsString =>
-      dispatch(recieveCardList(JSON.parse(cardListAsString)))
-    );
-}
+    AsyncStorage.getItem('cardList')
+        .then(cardListAsString =>
+            dispatch(recieveCardList(JSON.parse(cardListAsString)))
+        );
+};
 
 /**
 * @description - Adds a new deck to the deckList
@@ -61,16 +61,16 @@ export const getCardList = () => dispatch => {
 * @returns null
 */
 export const addDeck = (deck) => dispatch => {
-  AsyncStorage.getItem('deckList').then(deckListAsString => {
-    let deckList = JSON.parse(deckListAsString) || [];
+    AsyncStorage.getItem('deckList').then(deckListAsString => {
+        let deckList = JSON.parse(deckListAsString) || [];
         deckList.push(deck);
         deckList = JSON.stringify(deckList);
-    AsyncStorage.setItem('deckList', deckList)
-      .then(() =>
-        dispatch(recieveDeckList(JSON.parse(deckList)))
-      )
-  });
-}
+        AsyncStorage.setItem('deckList', deckList)
+            .then(() =>
+                dispatch(recieveDeckList(JSON.parse(deckList)))
+            );
+    });
+};
 
 /**
 * @description - Adds a new card to the cardList
@@ -80,16 +80,16 @@ export const addDeck = (deck) => dispatch => {
 * @returns null
 */
 export const addQuestion = (card) => dispatch => {
-  AsyncStorage.getItem('cardList').then(cardListAsString => {
-    let cardList = JSON.parse(cardListAsString) || [];
+    AsyncStorage.getItem('cardList').then(cardListAsString => {
+        let cardList = JSON.parse(cardListAsString) || [];
         cardList.push(card);
         cardList = JSON.stringify(cardList);
-    AsyncStorage.setItem('cardList', cardList)
-      .then(() =>
-        dispatch(recieveCardList(JSON.parse(cardList)))
-      )
-  });
-}
+        AsyncStorage.setItem('cardList', cardList)
+            .then(() =>
+                dispatch(recieveCardList(JSON.parse(cardList)))
+            );
+    });
+};
 
 /**
 * @description - Deletes a deck to the deckList
@@ -99,16 +99,16 @@ export const addQuestion = (card) => dispatch => {
 * @returns null
 */
 export const deleteDeck = (deckId) => dispatch => {
-  AsyncStorage.getItem('deckList').then(deckListAsString => {
-    let deckList = JSON.parse(deckListAsString) || [];
-    let newList = deckList.filter(deck => deck.id !== deckId);
+    AsyncStorage.getItem('deckList').then(deckListAsString => {
+        let deckList = JSON.parse(deckListAsString) || [];
+        let newList = deckList.filter(deck => deck.id !== deckId);
         newList = JSON.stringify(newList);
-    AsyncStorage.setItem('deckList', newList)
-      .then(() =>
-        dispatch(recieveDeckList(JSON.parse(newList)))
-      );
-  });
-}
+        AsyncStorage.setItem('deckList', newList)
+            .then(() =>
+                dispatch(recieveDeckList(JSON.parse(newList)))
+            );
+    });
+};
 
 /**
 * @description - Deletes a card to the cardList
@@ -118,16 +118,16 @@ export const deleteDeck = (deckId) => dispatch => {
 * @returns null
 */
 export const deleteQuestion = (cardId) => dispatch => {
-  AsyncStorage.getItem('cardList').then(cardListAsString => {
-    let cardList = JSON.parse(cardListAsString) || [];
-    let newList = cardList.filter(card => card.id !== cardId);
+    AsyncStorage.getItem('cardList').then(cardListAsString => {
+        let cardList = JSON.parse(cardListAsString) || [];
+        let newList = cardList.filter(card => card.id !== cardId);
         newList = JSON.stringify(newList);
-    AsyncStorage.setItem('cardList', newList)
-      .then(() =>
-        dispatch(recieveCardList(JSON.parse(newList)))
-      )
-  });
-}
+        AsyncStorage.setItem('cardList', newList)
+            .then(() =>
+                dispatch(recieveCardList(JSON.parse(newList)))
+            );
+    });
+};
 
 /**
 * @description - Initiates score to 0
@@ -136,10 +136,10 @@ export const deleteQuestion = (cardId) => dispatch => {
 */
 export const resetScore = () => dispatch => {
     AsyncStorage.setItem('score', '0')
-      .then(() =>
-        dispatch(recieveScore(0))
-      )
-}
+        .then(() =>
+            dispatch(recieveScore(0))
+        );
+};
 
 /**
 * @description - Increments score by 1
@@ -147,14 +147,14 @@ export const resetScore = () => dispatch => {
 * @returns null
 */
 export const incrementScore = () => dispatch => {
-  AsyncStorage.getItem('score')
-    .then( parseInt )
-    .then( score => {
-        score++;
-        AsyncStorage.setItem('score', score.toString())
-        .then(() => dispatch(recieveScore(score)))
-    })
-}
+    AsyncStorage.getItem('score')
+        .then( parseInt )
+        .then( score => {
+            score++;
+            AsyncStorage.setItem('score', score.toString())
+                .then(() => dispatch(recieveScore(score)));
+        });
+};
 
 /**
 * @description - Dispatches the action: RECIEVE_SCORE
@@ -164,8 +164,8 @@ export const incrementScore = () => dispatch => {
 * @returns action-object
 */
 export function recieveScore (score) {
-  return {
-    type: ACTIONS_ENUM.RECIEVE_SCORE,
-    score
-  }
+    return {
+        type: ACTIONS_ENUM.RECIEVE_SCORE,
+        score
+    };
 }

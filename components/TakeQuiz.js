@@ -1,14 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View,
-         Text,
-         StyleSheet,
-         FlatList } from 'react-native';
+    Text,
+    StyleSheet,
+    FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { getCardList } from '../actions';
 import util from '../utils';
 import Quiz from './Quiz';
-import { NavigationActions, TabNavigator } from 'react-navigation';
-import { pink, red } from '../utils/colors';
 import { clearLocalNotification, setLocalNotification } from '../utils/notif';
 
 /**
@@ -16,10 +14,10 @@ import { clearLocalNotification, setLocalNotification } from '../utils/notif';
 * @component
 */
 class TakeQuiz extends React.Component {
-  static navigationOptions = ({navigation, screenProps}) => {
-    return {
-      title: util.compressText(navigation.state.params.deck.title)
-    }
+  static navigationOptions = ({navigation}) => {
+      return {
+          title: util.compressText(navigation.state.params.deck.title)
+      };
   }
 
   /**
@@ -27,7 +25,7 @@ class TakeQuiz extends React.Component {
   * @description - Counter for howmany quizes are taken
   */
   state = {
-    counter : 0
+      counter : 0
   }
 
   /**
@@ -38,9 +36,9 @@ class TakeQuiz extends React.Component {
   * @returns null
   */
   componentDidMount = () => {
-    this.props.getCardList()
-    clearLocalNotification()
-    setLocalNotification()
+      this.props.getCardList();
+      clearLocalNotification();
+      setLocalNotification();
   }
 
   /**
@@ -50,9 +48,9 @@ class TakeQuiz extends React.Component {
   * @returns null
   */
   onButtonPress = () =>
-    this.setState((prevState) => {
-      return {counter: prevState.counter + 1};
-    });
+      this.setState((prevState) => {
+          return {counter: prevState.counter + 1};
+      });
 
   /**
   * @util
@@ -60,20 +58,20 @@ class TakeQuiz extends React.Component {
   */
   renderQuizes = (quizes) =>
       <View style={styles.container}>
-        <FlatList
-          horizontal={true}
-          data={quizes}
-          keyExtractor={(item, index) => index}
-          renderItem={({item, index}) =>
-            <Quiz
-              quiz={item}
-              key={item.id}
-              quizIndex={index + 1}
-              quizLength={quizes.length}
-              onButtonPress={this.onButtonPress}
-              />
-          }
-        />
+          <FlatList
+              horizontal={true}
+              data={quizes}
+              keyExtractor={(item, index) => index}
+              renderItem={({item, index}) =>
+                  <Quiz
+                      quiz={item}
+                      key={item.id}
+                      quizIndex={index + 1}
+                      quizLength={quizes.length}
+                      onButtonPress={this.onButtonPress}
+                  />
+              }
+          />
       </View>
 
   /**
@@ -82,7 +80,7 @@ class TakeQuiz extends React.Component {
   */
   renderInfoMessage = () =>
       <View style={styles.container}>
-        <Text> All done in this deck </Text>
+          <Text> All done in this deck </Text>
       </View>
 
   /**
@@ -92,11 +90,11 @@ class TakeQuiz extends React.Component {
   * @returns html template
   */
   render() {
-    let {quizes} = this.props;
-    let {counter} = this.state;
-    return (counter !== quizes.length) ?
-           this.renderQuizes(quizes) :
-           this.renderInfoMessage()
+      let {quizes} = this.props;
+      let {counter} = this.state;
+      return (counter !== quizes.length) ?
+          this.renderQuizes(quizes) :
+          this.renderInfoMessage();
   }
 }
 
@@ -104,13 +102,13 @@ class TakeQuiz extends React.Component {
 * @description - Style object
 */
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
+    container: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
 
 /**
@@ -120,7 +118,7 @@ const styles = StyleSheet.create({
 * @returns object containing dispatchers
 */
 const mapDispatchToProps = dispatch => ({
-  getCardList: () => dispatch(getCardList())
+    getCardList: () => dispatch(getCardList())
 });
 
 /**
@@ -131,11 +129,11 @@ const mapDispatchToProps = dispatch => ({
 * @returns object with updated quizes from state & deckId from parent
 */
 const mapStateToProps = (state, { navigation }) => {
-  let cards = state.cards || [];
-  return {
-    deckId : navigation.state.params.deck.id,
-    quizes : cards.filter(card => card.deckId == navigation.state.params.deck.id)
-  };
+    let cards = state.cards || [];
+    return {
+        deckId : navigation.state.params.deck.id,
+        quizes : cards.filter(card => card.deckId == navigation.state.params.deck.id)
+    };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TakeQuiz)
+export default connect(mapStateToProps, mapDispatchToProps)(TakeQuiz);
