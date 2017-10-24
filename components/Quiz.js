@@ -3,6 +3,7 @@ import { View,
     Text,
     StyleSheet,
     Dimensions,
+    Platform,
     TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -197,7 +198,7 @@ const styles = StyleSheet.create({
         backgroundColor: pink,
     },
     SubmitBtn: {
-        paddingTop: 7,
+        paddingTop: Platform.OS === 'ios' ? 10 : 7,
         paddingLeft: 10,
         paddingRight: 10,
         paddingBottom: 10,

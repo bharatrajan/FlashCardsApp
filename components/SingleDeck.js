@@ -2,6 +2,7 @@ import React from 'react';
 import { View,
     TouchableOpacity,
     Text,
+    Platform,
     StyleSheet} from 'react-native';
 import { connect } from 'react-redux';
 import { getCardList, deleteQuestion, deleteDeck } from '../actions';
@@ -156,7 +157,7 @@ const styles = StyleSheet.create({
         backgroundColor: coolGrey,
         borderWidth: 1,
         borderColor: grey,
-        paddingTop: 7,
+        paddingTop: Platform.OS === 'ios' ? 10 : 7,
         paddingLeft: 10,
         paddingRight: 10,
         paddingBottom: 10,
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
     },
     SubmitBtn: {
         backgroundColor: green,
-        paddingTop: 7,
+        paddingTop: Platform.OS === 'ios' ? 10 : 7,
         paddingLeft: 10,
         paddingRight: 10,
         paddingBottom: 10,
