@@ -138,7 +138,10 @@ const styles = StyleSheet.create({
     },
     SubmitBtn: {
         backgroundColor: green,
-        padding: 10,
+        paddingTop: 7,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
         borderRadius: 7,
         height: 45,
         width: 250,

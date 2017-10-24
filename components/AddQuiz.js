@@ -109,7 +109,7 @@ class AddQuiz extends React.Component {
                   <TextInput
                       autoCapitalize={'sentences'}
                       style={styles.inputBox}
-                      numberOfLines={6}
+                      numberOfLines={3}
                       multiline={true}
                       placeholder={'Question ...'}
                       placeholderTextColor={grey}
@@ -136,6 +136,7 @@ class AddQuiz extends React.Component {
                   }</Text>
               </View>
 
+              <Text style={styles.validationText}></Text>
               <Text style={styles.validationText}></Text>
           </KeyboardAvoidingView>
       );

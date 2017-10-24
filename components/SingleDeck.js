@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { getCardList, deleteQuestion, deleteDeck } from '../actions';
 import util from '../utils';
 import { Ionicons } from '@expo/vector-icons';
-import { white, green, grey } from '../utils/colors';
+import { white, green, grey, coolGrey } from '../utils/colors';
 
 /**
 * @description - Displays a single deck
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         height: '100%',
-        backgroundColor: '#E5E5E5',
+        backgroundColor: coolGrey,
         alignItems: 'center',
         position: 'absolute',
         top: 0,
@@ -153,10 +153,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     whiteButton:{
-        backgroundColor: '#E5E5E5',
+        backgroundColor: coolGrey,
         borderWidth: 1,
         borderColor: grey,
-        padding: 10,
+        paddingTop: 7,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
         borderRadius: 7,
         height: 45,
         marginLeft: 40,
@@ -169,7 +172,10 @@ const styles = StyleSheet.create({
     },
     SubmitBtn: {
         backgroundColor: green,
-        padding: 10,
+        paddingTop: 7,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
         borderRadius: 7,
         height: 45,
         marginLeft: 40,

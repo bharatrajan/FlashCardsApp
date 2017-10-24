@@ -197,7 +197,10 @@ const styles = StyleSheet.create({
         backgroundColor: pink,
     },
     SubmitBtn: {
-        padding: 10,
+        paddingTop: 7,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
         borderRadius: 7,
         height: 45,
         marginLeft: 40,

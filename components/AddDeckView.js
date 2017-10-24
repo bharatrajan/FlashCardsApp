@@ -82,8 +82,10 @@ class AddDeckView extends React.Component {
   render() {
       return (
           <KeyboardAvoidingView style={styles.container} behavior="padding">
-              <Text style={styles.title}> ADD A TITLE </Text>
               <View style={styles.inputBoxWrapper}>
+                  <Text style={styles.title}> ADD A TITLE </Text>
+                  <Text></Text>
+                  <Text></Text>
                   <TextInput
                       autoFocus={true}
                       autoCapitalize={'sentences'}
@@ -93,11 +95,11 @@ class AddDeckView extends React.Component {
                   />
 
                   {!this.state.isValid &&
-            <Text style={styles.validationText}>Enter valid title</Text>
+                      <Text style={styles.validationText}>Enter valid title</Text>
                   }
 
                   {this.state.isDuplicateTitle &&
-            <Text style={styles.validationText}>Title already exists</Text>
+                      <Text style={styles.validationText}>Title already exists</Text>
                   }
               </View>
               <TouchableOpacity
@@ -147,7 +149,10 @@ const styles = StyleSheet.create({
     },
     SubmitBtn: {
         backgroundColor: green,
-        padding: 10,
+        paddingTop: 7,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
         borderRadius: 7,
         height: 45,
         marginLeft: 40,
