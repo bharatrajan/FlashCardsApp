@@ -9,7 +9,8 @@ import { connect } from 'react-redux';
 import { addQuestion } from '../actions';
 import util from '../utils';
 import _ from 'lodash';
-import { white, green, pink, grey, lightGrey, coolGrey } from '../utils/colors';
+import { Ionicons } from '@expo/vector-icons';
+import { white, pink, grey, lightGrey, coolGrey } from '../utils/colors';
 
 /**
 * @description - Add quiz view.
@@ -19,12 +20,35 @@ class AddQuiz extends React.Component {
   /**
   * @description - Sets heading for the current header
   * @callBack
-  * @returns object containing title
+  * @returns object containing title & right-icon
   */
   static navigationOptions = ({navigation}) => {
       return {
-          title: util.compressText(navigation.state.params.deck.title)
+          title: util.compressText(navigation.state.params.deck.title),
+          headerRight: (
+              <TouchableOpacity
+                  style={{paddingRight:10}}
+                  onPress={() => {
+                      navigation.setParams({'delete': new Date().getTime()});
+                  }}
+              >
+                  <Ionicons name='md-add' size={28} color={white} />
+              </TouchableOpacity>
+          )
       };
+  }
+
+  /**
+  * @description - Called everytime when props updates
+  * @description - If navigation.state.params.delete changes,
+  * @description - then calls delete method
+  * @lifeCycle
+  * @returns null
+  */
+  componentWillUpdate = (newProps) => {
+      if(this.props.navigation.state.params.delete !=
+        newProps.navigation.state.params.delete)
+          this.addQuiz();
   }
 
   /**
@@ -112,12 +136,6 @@ class AddQuiz extends React.Component {
                   }</Text>
               </View>
 
-              <TouchableOpacity
-                  style={styles.SubmitBtn}
-                  onPress={this.addQuiz}>
-                  <Text style={styles.submitBtnText}>SUBMIT</Text>
-              </TouchableOpacity>
-
               <Text style={styles.validationText}></Text>
           </KeyboardAvoidingView>
       );
@@ -155,20 +173,7 @@ const styles = StyleSheet.create({
     },
     validationText: {
         color: pink,
-    },
-    SubmitBtn: {
-        backgroundColor: green,
-        padding: 10,
-        borderRadius: 7,
-        height: 45,
-        marginLeft: 40,
-        marginRight: 40,
-    },
-    submitBtnText: {
-        color: white,
-        fontSize: 22,
-        textAlign: 'center',
-    },
+    }
 });
 
 /**

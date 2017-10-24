@@ -7,7 +7,7 @@ import { ACTIONS_ENUM } from '../actions/actionList';
 let mainState = {
     deckList: [],
     cards: [],
-    score: 0,
+    score: {},
 };
 
 /**
@@ -52,9 +52,9 @@ function cardsReducer (cards = mainState.cards, action) {
 * @description - Score reducer. Handles all score related actions
 * @description - Updates the state for its subscriber
 * @reducer
-* @param {integer} score - Object from actionDispatcher
+* @param {object} score - Object from actionDispatcher
 * @param {object} action - Object from actionDispatcher
-* @returns score integer
+* @returns score object
 */
 function scoreReducer (score = mainState.score, action) {
     switch (action.type) {

@@ -48,11 +48,12 @@ class Quiz extends React.Component {
   * @returns null
   */
   onCorrectPress = () => {
-      this.props.onButtonPress();
+      const {onButtonPress, incrementScore, deckId} = this.props;
+      onButtonPress();
       this.setState({
           hideClass : {display : 'none'}
       });
-      this.props.incrementScore();
+      incrementScore(deckId);
   }
 
   /**
@@ -216,7 +217,7 @@ const styles = StyleSheet.create({
 * @returns object containing dispatchers
 */
 const mapDispatchToProps = dispatch => ({
-    incrementScore: () => dispatch(incrementScore()),
+    incrementScore: (deckId) => dispatch(incrementScore(deckId)),
     deleteQuestion: (quizId) => dispatch(deleteQuestion(quizId))
 });
 

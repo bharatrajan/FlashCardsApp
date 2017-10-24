@@ -2,11 +2,13 @@ import React from 'react';
 import { View,
     Text,
     StyleSheet,
+    TouchableOpacity,
     FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { getCardList } from '../actions';
+import { getCardList, resetScoreForDeck } from '../actions';
 import util from '../utils';
 import Quiz from './Quiz';
+import { white, green } from '../utils/colors';
 import { clearLocalNotification, setLocalNotification } from '../utils/notif';
 
 /**
@@ -36,7 +38,9 @@ class TakeQuiz extends React.Component {
   * @returns null
   */
   componentDidMount = () => {
-      this.props.getCardList();
+      const {deckId, getCardList, resetScoreForDeck} = this.props;
+      getCardList();
+      resetScoreForDeck(deckId);
       clearLocalNotification();
       setLocalNotification();
   }
@@ -53,10 +57,22 @@ class TakeQuiz extends React.Component {
       });
 
   /**
+  * @description - Event listener for restart quiz button
+  * @description - Resets state & resets score for this deck
+  * @eventListener
+  * @returns null
+  */
+  restart = () => {
+      const {deckId, resetScoreForDeck} = this.props;
+      resetScoreForDeck(deckId);
+      this.setState({counter: 0});
+  }
+
+  /**
   * @util
   * @returns HTML template with a FlatList
   */
-  renderQuizes = (quizes) =>
+  renderQuizes = (quizes, deckId) =>
       <View style={styles.container}>
           <FlatList
               horizontal={true}
@@ -66,6 +82,7 @@ class TakeQuiz extends React.Component {
                   <Quiz
                       quiz={item}
                       key={item.id}
+                      deckId={deckId}
                       quizIndex={index + 1}
                       quizLength={quizes.length}
                       onButtonPress={this.onButtonPress}
@@ -80,7 +97,17 @@ class TakeQuiz extends React.Component {
   */
   renderInfoMessage = () =>
       <View style={styles.container}>
-          <Text> All done in this deck </Text>
+          <TouchableOpacity
+              style={styles.SubmitBtn}
+              onPress={() => this.restart()}>
+              <Text style={styles.submitBtnText}>RESTART QUIZ</Text>
+          </TouchableOpacity>
+          <Text></Text>
+          <TouchableOpacity
+              style={styles.SubmitBtn}
+              onPress={() => this.props.navigation.goBack()}>
+              <Text style={styles.submitBtnText}>RETURN TO DECK</Text>
+          </TouchableOpacity>
       </View>
 
   /**
@@ -90,10 +117,10 @@ class TakeQuiz extends React.Component {
   * @returns html template
   */
   render() {
-      let {quizes} = this.props;
+      let {quizes, deckId} = this.props;
       let {counter} = this.state;
       return (counter !== quizes.length) ?
-          this.renderQuizes(quizes) :
+          this.renderQuizes(quizes, deckId) :
           this.renderInfoMessage();
   }
 }
@@ -108,7 +135,21 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
+    SubmitBtn: {
+        backgroundColor: green,
+        padding: 10,
+        borderRadius: 7,
+        height: 45,
+        width: 250,
+        marginLeft: 40,
+        marginRight: 40,
+    },
+    submitBtnText: {
+        color: white,
+        fontSize: 22,
+        textAlign: 'center',
+    },
 });
 
 /**
@@ -118,7 +159,8 @@ const styles = StyleSheet.create({
 * @returns object containing dispatchers
 */
 const mapDispatchToProps = dispatch => ({
-    getCardList: () => dispatch(getCardList())
+    getCardList: () => dispatch(getCardList()),
+    resetScoreForDeck: (deckId) => dispatch(resetScoreForDeck(deckId)),
 });
 
 /**

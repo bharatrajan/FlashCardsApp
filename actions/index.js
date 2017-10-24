@@ -130,29 +130,44 @@ export const deleteQuestion = (cardId) => dispatch => {
 };
 
 /**
-* @description - Initiates score to 0
+* @description - Initiates score to {}
 * @actionDispatcher
 * @returns null
 */
 export const resetScore = () => dispatch => {
-    AsyncStorage.setItem('score', '0')
+    AsyncStorage.setItem('score', '{}')
         .then(() =>
-            dispatch(recieveScore(0))
+            dispatch(recieveScore({}))
         );
 };
 
 /**
-* @description - Increments score by 1
+* @description - Increments score by 1 for a given deck
 * @actionDispatcher
 * @returns null
 */
-export const incrementScore = () => dispatch => {
+export const incrementScore = (deckId) => dispatch => {
     AsyncStorage.getItem('score')
-        .then( parseInt )
-        .then( score => {
-            score++;
-            AsyncStorage.setItem('score', score.toString())
-                .then(() => dispatch(recieveScore(score)));
+        .then( scoreObjAsString => {
+            let scoreObj = JSON.parse(scoreObjAsString);
+            scoreObj[deckId]++;
+            AsyncStorage.setItem('score', JSON.stringify(scoreObj))
+                .then(() => dispatch(recieveScore(scoreObj)));
+        });
+};
+
+/**
+* @description - Reset score for a specific deck
+* @actionDispatcher
+* @returns null
+*/
+export const resetScoreForDeck = (deckId) => dispatch => {
+    AsyncStorage.getItem('score')
+        .then( scoreObjAsString => {
+            let scoreObj = JSON.parse(scoreObjAsString) || {};
+            scoreObj[deckId] = 0;
+            AsyncStorage.setItem('score', JSON.stringify(scoreObj))
+                .then(() => dispatch(recieveScore(scoreObj)));
         });
 };
 
@@ -160,7 +175,7 @@ export const incrementScore = () => dispatch => {
 * @description - Dispatches the action: RECIEVE_SCORE
 * @description - Publishes current score to subcribers
 * @actionDispatcher
-* @param {Interger} score - Current score
+* @param {object} score - Current score
 * @returns action-object
 */
 export function recieveScore (score) {

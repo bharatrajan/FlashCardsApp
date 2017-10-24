@@ -196,8 +196,18 @@ const mapDispatchToProps = dispatch => ({
 * @returns object with updated score, cardList, deckList
 */
 const mapStateToProps = state => {
+
+    //Calculate total score from compartmental "score" object
+    let scoreToDisplay = 0;
+    if(!_.isEmpty(state.score) && !_.isEmpty(state.decks))
+        state.decks.forEach( deck => {
+            if(typeof state.score[deck.id] !== 'undefined')
+                scoreToDisplay += state.score[deck.id];
+        });
+
+
     return {
-        score : state.score,
+        score : scoreToDisplay,
         cardList : state.cards,
         deckList : _.orderBy(state.decks, ['timeStamp'], ['desc'])
     };
